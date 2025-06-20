@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'models/transaction.dart';
 import 'page/home_page.dart';
 import 'screens/add_transaction_screen.dart';
 import 'screens/stats_screen.dart';
-import 'models/transaction.dart';
 import 'storage/transaction_storage.dart';
 
 void main() async {
@@ -42,7 +42,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final TransactionStorage _storage = TransactionStorage();
+  final _storage = TransactionStorage();
   List<Transaction> _transactions = [];
 
   @override
