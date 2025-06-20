@@ -5,6 +5,9 @@ import '../models/transaction.dart';
 
 class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({super.key});
+
+  @override
+  State<AddTransactionScreen> createState() => _AddTransactionScreenState();
 }
 
 class _AddTransactionScreenState extends State<AddTransactionScreen> {
@@ -43,10 +46,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       date: date,
     );
 
-    Navigator.pop(
-      context,
-      newTx,
-    ); // ← Kirim transaksi balik ke halaman sebelumnya
+    Navigator.pop(context, newTx);
   }
 
   void _presentDatePicker() async {

@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
-class Transaction {
-  final String id;
-  final String title;
-  final double amount;
-  final String category;
-  final DateTime date;
+part 'transaction.g.dart'; // Wajib untuk adapter
+
+@HiveType(typeId: 0)
+class Transaction extends HiveObject {
+  @HiveField(0)
+  String id;
+
+  @HiveField(1)
+  String title;
+
+  @HiveField(2)
+  double amount;
+
+  @HiveField(3)
+  String category;
+
+  @HiveField(4)
+  DateTime date;
 
   Transaction({
     required this.id,
@@ -15,7 +28,6 @@ class Transaction {
     required this.date,
   });
 
-  // Tambahan opsional: icon otomatis berdasarkan kategori
   IconData get icon {
     switch (category.toLowerCase()) {
       case 'makanan':

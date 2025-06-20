@@ -53,8 +53,6 @@ class StatsScreen extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-
-            // Pie Chart
             Expanded(
               child: PieChart(
                 PieChartData(

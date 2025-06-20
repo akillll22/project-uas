@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+
 import 'page/home_page.dart';
 import 'screens/add_transaction_screen.dart';
 import 'screens/stats_screen.dart';
 import 'models/transaction.dart';
+import 'storage/transaction_storage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final appDocumentDir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(appDocumentDir.path);
+
+  Hive.registerAdapter(TransactionAdapter());
+  await Hive.openBox<Transaction>('transactions');
+
   runApp(const DompetApp());
 }
 
@@ -17,6 +29,7 @@ class DompetApp extends StatelessWidget {
       title: 'DompetKu',
       theme: ThemeData(primarySwatch: Colors.teal),
       home: const MainPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -29,9 +42,17 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final TransactionStorage _storage = TransactionStorage();
   List<Transaction> _transactions = [];
 
-  void _addTransaction(Transaction tx) {
+  @override
+  void initState() {
+    super.initState();
+    _transactions = _storage.getAllTransactions();
+  }
+
+  void _addTransaction(Transaction tx) async {
+    await _storage.addTransaction(tx);
     setState(() {
       _transactions.add(tx);
     });
